@@ -20,6 +20,7 @@ create table eleve(
 
 create table cours(
     cours_id serial primary key,
+    cours_date timestamp not null,
     cours_name varchar(255) not null,
     cours_prof int not null,
     foreign key cours_prof references prof(prof_id),
