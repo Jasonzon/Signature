@@ -1,5 +1,9 @@
 const router = require("express").Router()
 const pool = require("../db")
+const jwt = require("jsonwebtoken")
+const auth = require("../utils/auth")
+const bcrypt = require("bcrypt")
+const jwtGenerator = require("../utils/jwtGenerator")
 
 router.get("/", async (req, res) => {
     try {
@@ -57,6 +61,38 @@ router.delete("/:id", async (req, res) => {
         const oneProf = await pool.query("delete from prof where prof_id = $1",[id])
     } catch (err) {
         console.log(err.message)
+    }
+})
+
+router.get("/auth", async (req,res) => {
+    try {
+        const jwtToken = req.header("token")
+        const payload = jwt.verify(jwtToken, process.env.jwtSecret)
+        res.json({prof_id:payload.prof,prof_mail:payload.mail})
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
+router.post("/connect", async (req,res) => {
+    try {
+        const {mail, password} = req.body
+        const newProf = await pool.query("SELECT * FROM prof WHERE prof_mail = $1",[mail])
+        if (newProf.rows.length !== 0) {
+            const validPassword = await bcrypt.compare(password,newProf.rows[0].prof_password)
+            if (validPassword) {
+                const token = jwtGenerator(newProf.rows[0].prof_id,newProf.rows[0].prof_mail)
+                res.json({rows:newProf.rows,token})
+            }
+            else {
+                return res.status(403).send({rows:[]})
+            }
+        }
+        else {
+            return res.status(403).send("Not Authorized")
+        }
+    } catch (err) {
+        console.error(err.message)
     }
 })
 
