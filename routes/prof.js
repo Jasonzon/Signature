@@ -27,8 +27,8 @@ router.get("/:id", async (req,res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const {name,password} = req.body
-        const oneProf = await pool.query("insert into prof (prof_name, prof_password) values ($1, $2) returning *",[name,password])
+        const {name,password,mail} = req.body
+        const oneProf = await pool.query("insert into prof (prof_name, prof_password, prof_mail) values ($1, $2, $3) returning *",[name,password,mail])
         res.json(oneProf.rows[0])
     } catch (err) {
         console.log(err.message)
@@ -38,8 +38,8 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const {name,password} = req.body
-        const oneProf = await pool.query("update prof set prof_name = $2 where prof_id = $1 returning *", [id,name])
+        const {name,mail,password} = req.body
+        const oneProf = await pool.query("update prof set prof_name = $2, prof_mail = $3 where prof_id = $1 returning *", [id,name,mail])
         if (oneProf.length !== 0) {
             res.json(oneProf.rows[0])
         }

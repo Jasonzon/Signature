@@ -4,6 +4,7 @@ create table prof(
     prof_id serial primary key,
     prof_name varchar(255) not null,
     prof_password varchar(255) not null,
+    prof_mail varchar(255) not null,
 );
 
 create table class(
