@@ -8,7 +8,7 @@ function Header() {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand><Link to="/">Signatures</Link></Navbar.Brand>
+                <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
