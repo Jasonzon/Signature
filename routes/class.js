@@ -25,6 +25,16 @@ router.get("/:id", async (req,res) => {
     }
 })
 
+router.get("/prof/:id", async (req, res) => {
+    try {
+        const {id} = req.params
+        const allClasses = await pool.query("select distinct * from class c, cours k, prof p where k_class = c_id and k_prof = p_id natural join eleve")
+        res.json(allClasses.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         const {name} = req.body
