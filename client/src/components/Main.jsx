@@ -5,6 +5,9 @@ import Error from "./Error"
 import Connection from "./Connection";
 import {useState, useEffect} from "react"
 import Schedule from "./Schedule"
+import Header from "./Header"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Classes from "./Classes"
 
 function Main() {
 
@@ -32,10 +35,12 @@ function Main() {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route exact path="/" element={<Home user={user} setUser={setUser} />} />
         <Route exact path="/connection" element={<Connection user={user} setUser={setUser} connection={connection} setConnection={setConnection} />} />
         <Route exact path="/schedule" element={<Schedule user={user} setUser={setUser} />} />
+        <Route exact path="/classes" element={<Classes user={user} setUser={setUser} />} />
         <Route path="*" element={<Error />} /> 
       </Routes>
     </Router>

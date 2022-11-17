@@ -2,7 +2,7 @@ import "../styles/Connection.css"
 
 function Connection() {
     return (
-        <div className="connection">
+        <div>
             <h1>Connection</h1>
         </div>
     )

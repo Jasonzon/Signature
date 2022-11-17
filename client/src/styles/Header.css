@@ -1,0 +1,10 @@
+.nav-link a,
+.navbar-brand a {
+    text-decoration: none;
+    color:inherit;
+}
+
+.nav-link a:hover,
+.navbar-brand a:hover {
+    color:inherit;
+}
