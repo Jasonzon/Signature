@@ -2,7 +2,9 @@ import "../styles/Connection.css"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
-import {useState} from "react"
+import {useState, useEffect} from "react"
+import Container from "react-bootstrap/Container"
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function Connection({user, setUser}) {
 
@@ -10,6 +12,22 @@ function Connection({user, setUser}) {
     const [password, setPassword] = useState("")
 
     const [error, setError] = useState("")
+
+    const [matieres, setMatieres] = useState([])
+
+    async function getMatieres() {
+        const res = await fetch(`http://localhost:5000/prof/${user.prof_id}`, {
+            method: "GET"
+        })
+        const parseRes = await res.json()
+        setMatieres(parseRes)
+    }
+
+    useEffect(() => {
+        if (user.prof_name) {
+            getMatieres()
+        }
+    },[user])
 
     async function submit() {
         if (mail === "" || password === "") {
@@ -35,7 +53,7 @@ function Connection({user, setUser}) {
         }
     }
 
-    if (!user.name) {
+    if (!user.prof_name) {
         return (
             <Card style={{ width: '30rem', margin:"auto", marginTop:"4rem" }}>
                 <Card.Body>
@@ -58,9 +76,19 @@ function Connection({user, setUser}) {
     }
     else {
         return (
-            <div>
-                <h1>Mon compte</h1>
-            </div>
+            <Container>
+                <Card style={{ width: '30rem', margin:"auto", marginTop:"2rem" }}>
+                    <Card.Body>
+                        <Card.Title>{user.prof_name}</Card.Title>
+                        <Card.Subtitle>{user.prof_mail}</Card.Subtitle>
+                    </Card.Body>
+                </Card>
+                <ListGroup>
+                    {matieres.map(({matiere_name},index) => 
+                        <ListGroup.Item key={index}>{matiere_name}</ListGroup.Item>
+                    )}
+                </ListGroup>
+            </Container>
         )
     }
 }

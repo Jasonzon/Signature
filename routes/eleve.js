@@ -39,7 +39,7 @@ router.put("/:id", async (req, res) => {
     try {
         const {id} = req.params
         const {name,classe} = req.body
-        const oneEleve = await pool.query("update eleve set eleve_name = $2, eleve_name = $3 where eleve_id = $1 returning *", [id,name,classe])
+        const oneEleve = await pool.query("update eleve set eleve_name = $2, eleve_class = $3 where eleve_id = $1 returning *", [id,name,classe])
         if (oneEleve.length !== 0) {
             res.json(oneEleve.rows[0])
         }

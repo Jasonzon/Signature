@@ -3,8 +3,8 @@ const pool = require("../db")
 
 router.get("/", async (req, res) => {
     try {
-        const allClasses = await pool.query("select * from class")
-        res.json(allClasses.rows)
+        const allMatieres = await pool.query("select * from matiere")
+        res.json(allMatieres.rows)
     } catch (err) {
         console.log(err.message)
     }
@@ -13,9 +13,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req,res) => {
     try {
         const {id} = req.params
-        const oneClass = await pool.query("select * from class where class_id = $1",[id])
-        if (oneClass.length !== 0) {
-            res.json(oneClass.rows[0])
+        const oneMatiere = await pool.query("select * from matiere where matiere_id = $1",[id])
+        if (oneMatiere.length !== 0) {
+            res.json(oneMatiere.rows[0])
         }
         else {
             res.send("Error").status("404")
@@ -28,8 +28,8 @@ router.get("/:id", async (req,res) => {
 router.get("/prof/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const allClasses = await pool.query("select distinct * from class c, cours k, prof p where k_class = c_id and k_prof = p_id and p_id = $1 natural join eleve",[id])
-        res.json(allClasses.rows)
+        const allMatieres = await pool.query("select * from matiere where matiere_prof = $1",[id])
+        res.json(allMatieres.rows)
     } catch (err) {
         console.log(err.message)
     }
@@ -37,9 +37,9 @@ router.get("/prof/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const {name} = req.body
-        const oneClass = await pool.query("insert into class (class_name) values ($1) returning *",[name])
-        res.json(oneClass.rows[0])
+        const {name,prof} = req.body
+        const oneMatiere = await pool.query("insert into matiere (matiere_name, matiere_prof) values ($1, $2) returning *",[name,prof])
+        res.json(oneMatiere.rows[0])
     } catch (err) {
         console.log(err.message)
     }
@@ -48,10 +48,10 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const {name} = req.body
-        const oneClass = await pool.query("update class set class_name = $2 where class_id = $1 returning *", [id, name])
-        if (oneClass.length !== 0) {
-            res.json(oneClass.rows[0])
+        const {name,prof} = req.body
+        const oneMatiere = await pool.query("update matiere set matiere_name = $2, matiere_prof = $3 where matiere_id = $1 returning *", [id,name,prof])
+        if (oneMatiere.length !== 0) {
+            res.json(oneMatiere.rows[0])
         }
         else {
             res.send("Error").status("404")
@@ -64,7 +64,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const oneClass = await pool.query("delete from class where class_id = $1",[id])
+        const oneMatiere = await pool.query("delete from matiere where matiere_id = $1",[id])
     } catch (err) {
         console.log(err.message)
     }

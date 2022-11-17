@@ -1,6 +1,7 @@
 import "../styles/Classes.css"
 import Accordion from 'react-bootstrap/Accordion';
 import {useState, useEffect} from "react"
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function Classes() {
 
@@ -24,9 +25,11 @@ function Classes() {
             <Accordion.Item eventKey={index} key={index}>
                 <Accordion.Header>{class_name}</Accordion.Header>
                 <Accordion.Body>
+                    <ListGroup>
                     {eleves.map(({eleve_name},index) =>
-                        <p key={index}>{eleve_name}</p>
+                        <ListGroup.Item key={index}>{eleve_name}</ListGroup.Item>
                     )}
+                    </ListGroup>
                 </Accordion.Body>
             </Accordion.Item>
             )}

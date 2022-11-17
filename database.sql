@@ -19,10 +19,18 @@ create table eleve(
     foreign key eleve_class references class(class_id),
 );
 
+create table matiere(
+    matiere_id serial primary key,
+    matiere_name varchar(255) not null,
+    matiere_prof int not null,
+    foreign key matiere_prof references prof(prof_id),
+);
+
 create table cours(
     cours_id serial primary key,
     cours_date timestamp not null,
-    cours_name varchar(255) not null,
+    cours_matiere int not null,
+    foreign key cours_matiere references matiere(matiere_id),
     cours_prof int not null,
     foreign key cours_prof references prof(prof_id),
     cours_class int not null,

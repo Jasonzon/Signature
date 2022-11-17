@@ -19,6 +19,7 @@ app.use("/eleve", require("./routes/eleve"))
 app.use("/class", require("./routes/class"))
 app.use("/cours", require("./routes/cours"))
 app.use("/participe", require("./routes/participe"))
+app.use("/matiere", require("./routes/matiere"))
 
 app.get("/*", (req,res) => {
     res.sendFile(path.join(__dirname,"client/build/index.html"))
