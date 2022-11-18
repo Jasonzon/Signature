@@ -3,7 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import {useState, useEffect} from "react"
 import ListGroup from 'react-bootstrap/ListGroup';
 
-function Classes() {
+function Classes({user, setUser}) {
 
     const [classes, setClasses] = useState([])
 

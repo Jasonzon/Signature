@@ -29,6 +29,16 @@ router.get("/:id", async (req,res) => {
     }
 })
 
+router.get("/eleve/:id", async (req, res) => {
+    try {
+        const {id} = req.params
+        const allResults = await pool.query("select * from eleve where eleve_name like %$1%",[id])
+        res.json(allResults.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         const {name,password,mail} = req.body
