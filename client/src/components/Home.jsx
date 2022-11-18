@@ -3,10 +3,11 @@ import InputGroup from "react-bootstrap/InputGroup"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import {useState} from "react"
+import {useNavigate} from "react-router-dom"
 
-function Home({user, setUser}) {
+function Home({user, setUser, setResults}) {
 
-    const [results, setResults] = useState([])
+    const navigate = useNavigate()
 
     const [search, setSearch] = useState("")
 
@@ -16,6 +17,7 @@ function Home({user, setUser}) {
         })
         const parseRes = await res.json()
         setResults(parseRes)
+        navigate("/search")
     }
 
     return (
