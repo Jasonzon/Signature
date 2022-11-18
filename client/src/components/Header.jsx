@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav"
 import Container from "react-bootstrap/Container"
 import { Link } from "react-router-dom"
 
-function Header() {
+function Header({user, setUser}) {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -14,6 +14,7 @@ function Header() {
                     <Nav className="me-auto">
                         <Nav.Link><Link to="/classes">Classes</Link></Nav.Link>
                         <Nav.Link><Link to="/connection">Account</Link></Nav.Link>
+                        <Nav.Link>{user.prof_name}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

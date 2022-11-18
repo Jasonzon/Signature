@@ -9,6 +9,7 @@ import Header from "./Header"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Classes from "./Classes"
 import Eleve from "./Eleve"
+import Register from "./Register"
 
 function Main() {
 
@@ -38,13 +39,14 @@ function Main() {
 
   return (
     <Router>
-      <Header />
+      <Header user={user} setUser={setUser} />
       <Routes>
         <Route exact path="/" element={<Home setResults={setResults} user={user} setUser={setUser} />} />
         <Route exact path="/connection" element={<Connection user={user} setUser={setUser} connection={connection} setConnection={setConnection} />} />
         <Route exact path="/schedule" element={<Schedule user={user} setUser={setUser} />} />
         <Route exact path="/classes" element={<Classes user={user} setUser={setUser} />} />
         <Route exact path="/eleve" element={<Eleve user={user} setUser={setUser} results={results} />} />
+        <Route exact path="/register" element={<Register user={user} setUSer={setUser} /> } />
         <Route path="*" element={<Error />} /> 
       </Routes>
     </Router>
