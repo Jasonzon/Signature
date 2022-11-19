@@ -28,7 +28,7 @@ router.get("/:id", async (req,res) => {
 router.get("/prof/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const allClasses = await pool.query("select distinct * from class c, cours k, prof p where k_class = c_id and k_prof = p_id and p_id = $1 natural join eleve",[id])
+        const allClasses = await pool.query("select distinct class_name,eleve_name from cours inner join class on (cours.cours_class = class.class_id) inner join eleve on (eleve.eleve_class = class.class_id) where prof_id = $1",[id])
         res.json(allClasses.rows)
     } catch (err) {
         console.log(err.message)

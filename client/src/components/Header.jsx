@@ -12,7 +12,7 @@ function Header({user, setUser}) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link><Link to="/classes">Classes</Link></Nav.Link>
+                        {user.prof_id ? <Nav.Link><Link to="/classes">Classes</Link></Nav.Link> : null}
                         <Nav.Link><Link to="/connection">Account</Link></Nav.Link>
                         <Nav.Link>{user.prof_name}</Nav.Link>
                     </Nav>
