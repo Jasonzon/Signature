@@ -41,18 +41,16 @@ router.get("/eleve/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        console.log("ok1")
         const {name,password,mail} = req.body
+        const saltRound = 10
         const salt = await bcrypt.genSalt(saltRound)
         const bcryptPassword = await bcrypt.hash(password, salt)
-        console.log("ok")
-        const oneProf = await pool.query("insert into prof (prof_name, prof_password, prof_mail) values ($1, $2, $3) returning *",[name,password,bcryptPassword])
+        const oneProf = await pool.query("insert into prof (prof_name, prof_password, prof_mail) values ($1, $2, $3) returning *",[name,bcryptPassword,mail])
         if (oneProf.rows.length === 0) {
             return res.status(403).send("Not Authorized")
         }
         else {
-            const token = jwtGenerator(oneProf.rows[0].prof_id,oneProf.rows[0].prof_mail)
-            res.json({rows:oneProf.rows,token})
+            res.status(200).send("Granted")
         }
     } catch (err) {
         console.log(err.message)

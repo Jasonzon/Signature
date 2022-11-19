@@ -8,7 +8,7 @@ function Classes({user, setUser}) {
     const [classes, setClasses] = useState([])
 
     async function getClasses() {
-        const res = await fetch(`http://localhost:5000/class/prof/${user.prof_id}`, {
+        const res = await fetch(`http://localhost:5500/class/prof/${user.prof_id}`, {
             method: "GET"
         })
         const parseRes = await res.json()

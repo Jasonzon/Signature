@@ -16,7 +16,7 @@ function Connection({user, setUser}) {
     const [matieres, setMatieres] = useState([])
 
     async function getMatieres() {
-        const res = await fetch(`http://localhost:5000/prof/${user.prof_id}`, {
+        const res = await fetch(`http://localhost:5500/prof/${user.prof_id}`, {
             method: "GET"
         })
         const parseRes = await res.json()
@@ -35,7 +35,7 @@ function Connection({user, setUser}) {
         }
         else {
             const body = {mail,password}
-            const res = await fetch("http://localhost:5000/prof/connect", {
+            const res = await fetch("http://localhost:5500/prof/connect", {
                 method: "POST",
                 headers: {"Content-Type" : "application/json"},
                 body:JSON.stringify(body)
@@ -68,7 +68,7 @@ function Connection({user, setUser}) {
                             <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                             <Form.Text style={{color:"red"}} className="text-muted">{error}</Form.Text>
                         </Form.Group>
-                        <Button variant="primary" type="submit">Valider</Button>
+                        <Button variant="primary" onClick={() => submit()}>Valider</Button>
                     </Form>
                 </Card.Body>
             </Card>

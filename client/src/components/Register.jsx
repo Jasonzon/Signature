@@ -8,19 +8,14 @@ function Register({user, setUser}) {
 
     const [inputs, setInputs] = useState({name:"",mail:"",password:""})
 
-    async function register(e) {
-        console.log("LOL")
-        const body = {mail:inputs.mail, name:inputs.pseudo, password:inputs.password}
-        console.log("LOL2")
-        const res2 = await fetch("http://localhost:5000/prof", {
+    async function register() {
+        const body = {mail:inputs.mail, name:inputs.name, password:inputs.password}
+        console.log(body)
+        const res2 = await fetch("http://localhost:5500/prof", {
             method: "POST",
             headers: {"Content-Type" : "application/json"},
             body:JSON.stringify(body)
         })
-        console.log("LOL3")
-        const parseRes2 = await res2.json()
-        localStorage.setItem("token",parseRes2.token)
-        setUser(parseRes2.rows[0])
     }
 
     return (
@@ -30,17 +25,17 @@ function Register({user, setUser}) {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control onChange={(e) => setInputs({...inputs,mail:e.target.value})} type="email" placeholder="Enter email" />
+                        <Form.Control value={inputs.mail} onChange={(e) => setInputs({...inputs,mail:e.target.value})} type="email" placeholder="Enter email" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlID="formBasicName">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control onchange={(e) => setInputs({...inputs,name:e.target.value})} type="text" placeholder="Name" />
+                        <Form.Control value={inputs.name} onChange={(e) => setInputs({...inputs,name:e.target.value})} type="text" placeholder="Name" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={(e) => setInputs({...inputs,password:e.target.value})} type="password" placeholder="Password" />
+                        <Form.Control value={inputs.password} onChange={(e) => setInputs({...inputs,password:e.target.value})} type="password" placeholder="Password" />
                     </Form.Group>
-                    <Button variant="primary" type="submit" onClick={(e) => register(e)}>Valider</Button>
+                    <Button variant="primary" onClick={() => register()}>Valider</Button>
                 </Form>
             </Card.Body>
         </Card>

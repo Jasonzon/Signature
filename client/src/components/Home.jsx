@@ -12,7 +12,7 @@ function Home({user, setUser, setResults}) {
     const [search, setSearch] = useState("")
 
     async function getSearch() {
-        const res = await fetch(`http://localhost:5000/prof/eleve/${search}`, {
+        const res = await fetch(`http://localhost:5500/prof/eleve/${search}`, {
             method: "GET"
         })
         const parseRes = await res.json()
