@@ -13,8 +13,7 @@ function Header({user, setUser}) {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         {user.prof_id ? <Nav.Link><Link to="/classes">Classes</Link></Nav.Link> : null}
-                        <Nav.Link><Link to="/connection">Account</Link></Nav.Link>
-                        <Nav.Link>{user.prof_name}</Nav.Link>
+                        <Nav.Link><Link to="/connection">{user.prof_id ? user.prof_name : "Account"}</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

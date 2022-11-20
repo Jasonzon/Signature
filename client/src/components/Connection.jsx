@@ -16,7 +16,7 @@ function Connection({user, setUser}) {
     const [matieres, setMatieres] = useState([])
 
     async function getMatieres() {
-        const res = await fetch(`http://localhost:5500/prof/${user.prof_id}`, {
+        const res = await fetch(`http://localhost:5500/matiere/prof/${user.prof_id}`, {
             method: "GET"
         })
         const parseRes = await res.json()
@@ -83,7 +83,8 @@ function Connection({user, setUser}) {
                         <Card.Subtitle>{user.prof_mail}</Card.Subtitle>
                     </Card.Body>
                 </Card>
-                <ListGroup>
+                <h1 style={{marginLeft:"1rem",marginTop:"1rem"}}>Vos cours</h1>
+                <ListGroup style={{marginTop:"1rem"}}>
                     {matieres.map(({matiere_name},index) => 
                         <ListGroup.Item key={index}>{matiere_name}</ListGroup.Item>
                     )}
