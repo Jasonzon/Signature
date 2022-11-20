@@ -13,13 +13,23 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req,res) => {
     try {
         const {id} = req.params
-        const oneEleve = await pool.query("select * from eleve where eleve_id = $1",[id])
+        const oneEleve = await pool.query("select * from eleve inner join class on (class_id = eleve_class) where eleve_id = $1",[id])
         if (oneEleve.length !== 0) {
             res.json(oneEleve.rows[0])
         }
         else {
             res.send("Error").status("404")
         }
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
+router.get("/absence/:id", async (req, res) => {
+    try {
+        const {id} = req.params
+        const allAbsences = await pool.query("select cours_date, matiere_name from participe inner join eleve on (eleve_id = participe_eleve) inner join cours on (cours_id = participe_cours) inner join matiere on (matiere_id = cours_matiere) where participe_eleve = $1 and participe_state = false",[id])
+        res.json(allAbsences.rows)
     } catch (err) {
         console.log(err.message)
     }

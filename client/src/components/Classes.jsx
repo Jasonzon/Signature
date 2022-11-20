@@ -3,8 +3,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import {useState, useEffect} from "react"
 import ListGroup from 'react-bootstrap/ListGroup';
 import Container from "react-bootstrap/Container"
+import {useNavigate} from "react-router-dom"
 
 function Classes({user, setUser}) {
+
+    const navigate = useNavigate()
 
     const [classes, setClasses] = useState([])
 
@@ -39,7 +42,7 @@ function Classes({user, setUser}) {
                     <Accordion.Body>
                         <ListGroup>
                         {eleves.map((eleve_name,index) =>
-                            <ListGroup.Item key={index}>{eleve_name}</ListGroup.Item>
+                            <ListGroup.Item action key={index} onClick={() => navigate(`/eleve`)}>{eleve_name}</ListGroup.Item>
                         )}
                         </ListGroup>
                     </Accordion.Body>

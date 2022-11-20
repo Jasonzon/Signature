@@ -42,5 +42,6 @@ create table participe(
     participe_cours int not null,
     foreign key (participe_cours) references cours(cours_id),
     participe_eleve int not null,
-    foreign key (participe_eleve) references eleve(eleve_id)
+    foreign key (participe_eleve) references eleve(eleve_id),
+    participe_state boolean not null
 );

@@ -16,8 +16,6 @@ function Main() {
   const [user, setUser] = useState({})
   const [connection, setConnection] = useState(true)
 
-  const [results, setResults] = useState([])
-
   async function auth() {
     if (localStorage.token) {
         const res = await fetch("http://localhost:5500/prof/auth", {
@@ -41,11 +39,11 @@ function Main() {
     <Router>
       <Header user={user} setUser={setUser} />
       <Routes>
-        <Route exact path="/" element={<Home setResults={setResults} user={user} setUser={setUser} />} />
+        <Route exact path="/" element={<Home user={user} setUser={setUser} />} />
         <Route exact path="/connection" element={<Connection user={user} setUser={setUser} connection={connection} setConnection={setConnection} />} />
         <Route exact path="/schedule" element={<Schedule user={user} setUser={setUser} />} />
         <Route exact path="/classes" element={user.prof_id ? <Classes user={user} setUser={setUser} /> : <Error />} />
-        <Route exact path="/eleve" element={<Eleve user={user} setUser={setUser} results={results} />} />
+        <Route exact path="/eleve/:id" element={<Eleve user={user} setUser={setUser} />} />
         <Route exact path="/register" element={<Register user={user} setUSer={setUser} /> } />
         <Route path="*" element={<Error />} /> 
       </Routes>
