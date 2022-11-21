@@ -86,7 +86,7 @@ function Connection({user, setUser}) {
                     <Card.Body>
                         <Card.Title>{user.prof_name}</Card.Title>
                         <Card.Subtitle>{user.prof_mail}</Card.Subtitle>
-                        <Button onClick={() => logout()}></Button>
+                        <Button style={{marginTop:".5rem"}} onClick={() => logout()}>Se déconnecter</Button>
                     </Card.Body>
                 </Card>
                 <h1 style={{marginLeft:"1rem",marginTop:"1rem"}}>Vos cours</h1>
