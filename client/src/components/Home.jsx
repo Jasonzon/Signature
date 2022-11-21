@@ -67,9 +67,9 @@ function Home({user, setUser, setResults}) {
                             <ListGroup.Item key={index} as="li" className="d-flex justify-content-between align-items-start">
                                 <div className="ms-2 me-auto">
                                     <div className="fw-bold">{matiere_name}</div>
-                                    {class_name}
+                                    {class_name} {new Date(cours_date).toISOString().slice(11,16)} {" - "} {new Date(new Date(cours_date).getTime() + 5400000).toISOString().slice(11,16)}
                                 </div>
-                                {cours_date > new Date() ? <Badge bg="primary" pill>A venir</Badge> : <Badge bg="success">Passé</Badge>}
+                                {new Date(cours_date) > new Date() ? <Badge bg="primary">Futur</Badge> : <Badge bg="success">Passé</Badge>}
                             </ListGroup.Item>                       
                         )}
                     </ListGroup>
