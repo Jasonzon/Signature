@@ -35,6 +35,16 @@ router.get("/prof/:id", async (req, res) => {
     }
 })
 
+router.get("/today/:id", async (req, res) => {
+    try {
+        const {id} = req.params
+        const allCourses = await pool.query("select cours_date, class_name, matiere_name from cours inner join class on (cours.cours_class = class.class_id) inner join matiere on (cours.cours_matiere = matiere.matiere_id) where cours_prof = $1 and cours_date >= date_trunc('day', now()) order by cours_date",[id])
+        res.json(allCourses.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         const {date,name,prof,classe} = req.body

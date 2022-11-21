@@ -2,17 +2,22 @@ import "../styles/Home.css"
 import InputGroup from "react-bootstrap/InputGroup"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import {useNavigate} from "react-router-dom"
 import Alert from "react-bootstrap/Alert"
 import Container from "react-bootstrap/Container"
 import {Link} from "react-router-dom"
+import ListGroup from "react-bootstrap/ListGroup"
+import Card from "react-bootstrap/Card"
+import Badge from "react-bootstrap/Badge"
 
 function Home({user, setUser, setResults}) {
 
     const navigate = useNavigate()
 
     const [search, setSearch] = useState("")
+
+    const [courses, setCourses] = useState([])
 
     async function getSearch() {
         const res = await fetch(`http://localhost:5500/prof/eleve/${search}`, {
@@ -22,6 +27,20 @@ function Home({user, setUser, setResults}) {
         setResults(parseRes)
         navigate("/search")
     }
+
+    async function getCourses() {
+        const res = await fetch(`http://localhost:5500/cours/today/${user.prof_id}`, {
+            method: "GET"
+        })
+        const parseRes = await res.json()
+        setCourses(parseRes)
+    }
+
+    useEffect(() => {
+        if (user.prof_id) {
+            getCourses()
+        }
+    },[user])
 
     if (user.prof_id) {
         return (
@@ -36,6 +55,25 @@ function Home({user, setUser, setResults}) {
                     />
                     <Button variant="outline-secondary" id="button-addon2" onClick={() => getSearch()}>Chercher</Button>
                 </InputGroup>
+                <Container>
+                    <Card style={{ width: '30rem', margin:"0", marginTop:"2rem" }}>
+                        <Card.Body>
+                            <Card.Title>Vos cours aujourd'hui</Card.Title>
+                            <Card.Subtitle>{new Date().toLocaleDateString()}</Card.Subtitle>
+                        </Card.Body>
+                    </Card>
+                    <ListGroup as="ol" numbered style={{marginTop:"1rem"}}>
+                        {courses.map(({cours_date,class_name,matiere_name},index) => 
+                            <ListGroup.Item key={index} as="li" className="d-flex justify-content-between align-items-start">
+                                <div className="ms-2 me-auto">
+                                    <div className="fw-bold">{matiere_name}</div>
+                                    {class_name}
+                                </div>
+                                {cours_date > new Date() ? <Badge bg="primary" pill>A venir</Badge> : <Badge bg="success">Passé</Badge>}
+                            </ListGroup.Item>                       
+                        )}
+                    </ListGroup>
+                </Container>
             </Container>
         )
     }
