@@ -25,6 +25,16 @@ router.get("/:id", async (req,res) => {
     }
 })
 
+router.get("/prof/:id", async (req, res) => {
+    try {
+        const  {id} = req.params
+        const allCourses = await pool.query("select * from cours where cours_prof = $1",[id])
+        res.json(allCourses.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         const {date,name,prof,classe} = req.body

@@ -29,11 +29,11 @@ function Classes({user, setUser}) {
             <Accordion defaultActiveKey="0">
                 {classes.slice().reduce((accumulator,currentValue) => {
                     if (accumulator.length !== 0 && currentValue.class_name === accumulator[accumulator.length-1].class_name) {
-                        accumulator[accumulator.length-1].eleves.push(currentValue.eleve_name)
+                        accumulator[accumulator.length-1].eleves.push({eleve_name:currentValue.eleve_name,eleve_id:currentValue.eleve_id})
                         return accumulator
                     }
                     else {
-                        accumulator.push({class_name:currentValue.class_name,eleves:[currentValue.eleve_name]})
+                        accumulator.push({class_name:currentValue.class_name,eleves:[{eleve_name:currentValue.eleve_name,eleve_id:currentValue.eleve_id}]})
                         return accumulator
                     }
                 },[]).map(({class_name,eleves},index) => 
@@ -41,8 +41,8 @@ function Classes({user, setUser}) {
                     <Accordion.Header>{class_name}</Accordion.Header>
                     <Accordion.Body>
                         <ListGroup>
-                        {eleves.map((eleve_name,index) =>
-                            <ListGroup.Item action key={index} onClick={() => navigate(`/eleve`)}>{eleve_name}</ListGroup.Item>
+                        {eleves.map(({eleve_id,eleve_name},index) =>
+                            <ListGroup.Item action key={index} onClick={() => navigate(`/eleve/${eleve_id}`)}>{eleve_name}</ListGroup.Item>
                         )}
                         </ListGroup>
                     </Accordion.Body>
