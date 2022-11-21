@@ -53,6 +53,11 @@ function Connection({user, setUser}) {
         }
     }
 
+    function logout() {
+        localStorage.removeItem("token")
+        setUser({})
+    }
+
     if (!user.prof_name) {
         return (
             <Card style={{ width: '30rem', margin:"auto", marginTop:"4rem" }}>
@@ -81,6 +86,7 @@ function Connection({user, setUser}) {
                     <Card.Body>
                         <Card.Title>{user.prof_name}</Card.Title>
                         <Card.Subtitle>{user.prof_mail}</Card.Subtitle>
+                        <Button onClick={() => logout()}></Button>
                     </Card.Body>
                 </Card>
                 <h1 style={{marginLeft:"1rem",marginTop:"1rem"}}>Vos cours</h1>

@@ -1,9 +1,10 @@
 const router = require("express").Router()
 const pool = require("../db")
 const jwt = require("jsonwebtoken")
-const auth = require("../utils/auth")
+//const auth = require("../utils/auth")
 const bcrypt = require("bcrypt")
 const jwtGenerator = require("../utils/jwtGenerator")
+require("dotenv").config()
 
 router.get("/", async (req, res) => {
     try {
@@ -11,6 +12,16 @@ router.get("/", async (req, res) => {
         res.json(allProfs.rows)
     } catch (err) {
         console.log(err.message)
+    }
+})
+
+router.get("/auth/", async (req,res) => {
+    try {
+        const jwtToken = req.header("token")
+        const payload = jwt.verify(jwtToken, process.env.jwtSecret)
+        res.json({prof_id:payload.prof,prof_mail:payload.mail})
+    } catch (err) {
+        console.error(err.message)
     }
 })
 
@@ -22,7 +33,7 @@ router.get("/:id", async (req,res) => {
             res.json(oneProf.rows[0])
         }
         else {
-            res.send("Error").status("404")
+            res.send("Error").status(404)
         }
     } catch (err) {
         console.log(err.message)
@@ -79,16 +90,6 @@ router.delete("/:id", async (req, res) => {
         const oneProf = await pool.query("delete from prof where prof_id = $1",[id])
     } catch (err) {
         console.log(err.message)
-    }
-})
-
-router.get("/auth", async (req,res) => {
-    try {
-        const jwtToken = req.header("token")
-        const payload = jwt.verify(jwtToken, process.env.jwtSecret)
-        res.json({prof_id:payload.prof,prof_mail:payload.mail})
-    } catch (err) {
-        console.error(err.message)
     }
 })
 

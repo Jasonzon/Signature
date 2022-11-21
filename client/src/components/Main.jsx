@@ -16,23 +16,26 @@ function Main() {
   const [user, setUser] = useState({})
   const [connection, setConnection] = useState(true)
 
-  async function auth() {
+  async function connect() {
     if (localStorage.token) {
-        const res = await fetch("http://localhost:5500/prof/auth", {
+        const res = await fetch("http://localhost:5500/prof/auth/", {
             method: "GET",
             headers: {token: localStorage.token}
         })
         const parseRes = await res.json()
-        const res2 = await fetch(`http://localhost:5500/prof/${parseRes.polyuser_id}`, {
+        const res2 = await fetch(`http://localhost:5500/prof/${parseRes.prof_id}`, {
             method: "GET"
         })
         const parseRes2 = await res2.json()
         setUser({prof_id:parseRes2.prof_id,prof_mail:parseRes.prof_mail,prof_name:parseRes2.prof_name})
     }
+    else {
+      console.log("OK")
+    }
   }
 
   useEffect(() => {
-      auth()
+      connect()
   },[])
 
   return (
