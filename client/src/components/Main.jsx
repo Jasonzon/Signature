@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Classes from "./Classes"
 import Eleve from "./Eleve"
 import Register from "./Register"
+import Cours from "./Cours"
 
 function Main() {
 
@@ -48,6 +49,7 @@ function Main() {
         <Route exact path="/classes" element={user.prof_id ? <Classes user={user} setUser={setUser} /> : <Error />} />
         <Route exact path="/eleve/:id" element={<Eleve user={user} setUser={setUser} />} />
         <Route exact path="/register" element={<Register user={user} setUSer={setUser} /> } />
+        <Route exact path="/cours/:id" element={<Cours user={user} setUser={setUser} />} />
         <Route path="*" element={<Error />} /> 
       </Routes>
     </Router>

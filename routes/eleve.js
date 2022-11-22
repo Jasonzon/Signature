@@ -25,6 +25,16 @@ router.get("/:id", async (req,res) => {
     }
 })
 
+router.get("/class/:id", async (req, res) => {
+    try {
+        const {id} = req.params
+        const allEleves = await pool.query("select * from eleve where eleve_class = $1",[id])
+        res.json(allEleves.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+})
+
 router.get("/absence/:id", async (req, res) => {
     try {
         const {id} = req.params

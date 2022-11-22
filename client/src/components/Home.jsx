@@ -63,8 +63,8 @@ function Home({user, setUser, setResults}) {
                         </Card.Body>
                     </Card>
                     <ListGroup as="ol" numbered style={{marginTop:"1rem"}}>
-                        {courses.map(({cours_date,class_name,matiere_name},index) => 
-                            <ListGroup.Item key={index} as="li" className="d-flex justify-content-between align-items-start">
+                        {courses.map(({cours_id,cours_date,class_name,matiere_name},index) => 
+                            <ListGroup.Item key={index} as="li" className="d-flex justify-content-between align-items-start" action style={{cursor:"pointer"}} onClick={() => navigate(`/cours/${cours_id}`)}>
                                 <div className="ms-2 me-auto">
                                     <div className="fw-bold">{matiere_name}</div>
                                     {class_name} {new Date(cours_date).toISOString().slice(11,16)} {" - "} {new Date(new Date(cours_date).getTime() + 5400000).toISOString().slice(11,16)}
