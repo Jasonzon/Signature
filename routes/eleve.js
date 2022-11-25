@@ -18,7 +18,7 @@ router.get("/:id", async (req,res) => {
             res.json(oneEleve.rows[0])
         }
         else {
-            res.send("Error").status("404")
+            return res.json({}).send("Not found").status(404)
         }
     } catch (err) {
         console.log(err.message)

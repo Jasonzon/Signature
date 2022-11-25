@@ -14,11 +14,11 @@ router.get("/:id", async (req,res) => {
     try {
         const {id} = req.params
         const oneCours = await pool.query("select * from cours inner join class on (class.class_id = cours.cours_class) inner join matiere on (matiere.matiere_id = cours.cours_matiere) where cours_id = $1",[id])
-        if (oneCours.length !== 0) {
+        if (oneCours.rows.length !== 0) {
             res.json(oneCours.rows[0])
         }
         else {
-            res.send("Error").status("404")
+            return res.json({}).send("Not Found").status(404)
         }
     } catch (err) {
         console.log(err.message)

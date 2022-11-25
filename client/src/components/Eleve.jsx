@@ -1,13 +1,15 @@
 import "../styles/Search.css"
 import ListGroup from "react-bootstrap/ListGroup"
 import {useState, useEffect} from "react"
-import {useParams} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import Container from "react-bootstrap/Container"
 import Card from "react-bootstrap/Card"
 
 function Eleve({user, setUser, results}) {
 
     const {id} = useParams()
+
+    const navigate = useNavigate()
 
     const [absences, setAbsences] = useState([])
     const [eleve, setEleve] = useState({eleve_name:"",class_name:""})
@@ -25,7 +27,12 @@ function Eleve({user, setUser, results}) {
             method: "GET"
         })
         const parseRes = await res.json()
-        setEleve(parseRes)
+        if (!parseRes.eleve_name) {
+            navigate("/")
+        }
+        else {
+            setEleve(parseRes)
+        }
     }
 
     useEffect(() => {

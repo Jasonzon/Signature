@@ -45,7 +45,6 @@ function Main() {
       <Routes>
         <Route exact path="/" element={<Home user={user} setUser={setUser} />} />
         <Route exact path="/connection" element={<Connection user={user} setUser={setUser} connection={connection} setConnection={setConnection} />} />
-        <Route exact path="/schedule" element={<Schedule user={user} setUser={setUser} />} />
         <Route exact path="/classes" element={user.prof_id ? <Classes user={user} setUser={setUser} /> : <Error />} />
         <Route exact path="/eleve/:id" element={<Eleve user={user} setUser={setUser} />} />
         <Route exact path="/register" element={<Register user={user} setUSer={setUser} /> } />

@@ -29,6 +29,7 @@ function Cours({user, setUser}) {
         const res = await fetch(`http://localhost:5500/cours/${id}`, {
             method: "GET"
         })
+        console.log(res)
         const parseRes = await res.json()
         console.log(parseRes)
         if (!parseRes.cours_date) {
