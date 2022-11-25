@@ -48,8 +48,8 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const {id} = req.params
-        const {cours,eleve} = req.body
-        const oneParticipe = await pool.query("update participe set participe_cours = $2, participe_eleve = $3 where participe_id = $1 returning *", [id,cours,eleve])
+        const {cours,eleve,state} = req.body
+        const oneParticipe = await pool.query("update participe set participe_state = $3 where participe_eleve = $2 and participe_cours = $1 where participe_id = $4 returning *", [cours,eleve,state,id])
         if (oneParticipe.length !== 0) {
             res.json(oneParticipe.rows[0])
         }
